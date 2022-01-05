@@ -1,0 +1,36 @@
+Vue란 무엇인가?
+>>MVVM 패턴의 뷰모델(ViewModel) 레이어에 해당하는
+화면(View)단 라이브러리
+
+DOM listener
+화면(html로 구현되고 DOM을 통해 자바스크립트로 
+조작됨)에서 이벤트(클릭..등)가 발생했을 때
+그것을 캐치해 Model에 전달. 자바스크립트에서 지정한 특정
+로직에 따라 실행함. 
+
+DOM bindings
+자바스크립트의 데이터가 변했을때 그런 내용을 바로 데이터
+바인딩즈를 이용해 화면에 바로 반영함.
+
+전체선택
+Ctrl + a
+
+REACTIVITY(반응성)
+https://blog.rhostem.com/posts/2018-09-12-javascript-reactivity
+
+view의 핵심 ..
+데이터의 변화를 라이브러리에서 감지해 알아서 화면에 띄워주는것
+(data binding)
+
+OBject.defineProperty()
+동작을 재정의함
+문법 -> Object.defineProperty(대상 객체, 객체의 속성, {
+    정의할 내용
+})
+
+뷰 인스턴스
+인스턴스는 뷰로 개발할때 필수로 생성해야하는 코드
+
+인스턴스 생성
+new Vue();
+z
