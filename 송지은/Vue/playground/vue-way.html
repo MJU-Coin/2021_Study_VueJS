@@ -8,10 +8,6 @@
 </head>
 <body>
     <div id="app"></div>
-
-
-})();
-
     <script>
         var div = document.querySelector('#app');
         var viewModel = {};
@@ -20,24 +16,24 @@
             function init(){
                 Object.defineProperty(viewModel,'str',{
                 // 속성에 접근했을때의 동작을 정의하는 것
-                get:function(){
-                    console.log('접근');
-                },
-                
-                // 속성에 값을 할당했을 때의 동작을 정의
-                set:function(newValue){
-                    console.log('할당', newValue);
-                    render(newValue);
-                }
-            });
+                    get:function(){
+                        console.log('접근');
+                    },
+                    
+                    // 속성에 값을 할당했을 때의 동작을 정의
+                    set:function(newValue){
+                        console.log('할당', newValue);
+                        render(newValue);
+                    }
+                });
             }
 
-            function render(){
-            div.innerHTML = newValue;
-        }
+            function render(value){
+                div.innerHTML = value;
+            }
 
-        init();
-    })();
+            init(); 
+        })();
     </script>
 </body>
 </html>
