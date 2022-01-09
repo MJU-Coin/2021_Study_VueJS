@@ -8,33 +8,38 @@
 </head>
 <body>
     <div id="app">
-        <!--<app-header v-bind:props 속성 이름="상위 컴포넌트의 데이터 이름"></app-header>!-->
-        <app-header v-bind:propsdata="message"></app-header>
-        <app-content v-bind:propsdata="num"></app-content>
+        <app-header v-bind:propsdata="num"></app-header>
+        <app-content v-on:pass="deliverNum"></app-content>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
+    <script>s
         var appHeader = {
-            template: '<h1>{{ propsdata }}</h1>',
+            template: '<div>header</div>',
             props: ['propsdata']
-
         }
-
         var appContent = {
-            template: '<div>{{ propsdata }}</div>',
-            props: ['propsdata']
+            template: '<div>content<button v-on:click="passNum">pass</button></div>',
+            methods: {
+                passNum: function() {
+                    this.$emit('pass', 10);
+                }
+            }
         }
 
         new Vue({
-            el: '#app',
+            el:'#app',
             components: {
                 'app-header': appHeader,
                 'app-content': appContent
             },
             data: {
-                message: 'hi',
-                num: 10
+                num: 0
+            },
+            methods: {
+                deliverNum: function(value) {
+                    this.num = value;
+                }
             }
         })
     </script>
