@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <app-header></app-header>
+    <app-footer></app-footer>
+  </div>
+  <app-header></app-header>
+  <div id="app2">
+    <!-- 전역 component보다 local component가 우선적용된다. -->
+    <app-header></app-header>
+    <!-- 당연히 다른 local component는 적용이 되지 않는다. -->
+    <app-footer></app-footer>
+    <app-latedefine></app-latedefine>
+    <div></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 전역 component
+    // 실제로 사용할 일은 거의 없다.
+    Vue.component('app-header', {
+      template: '<h1>Header</h1>'
+    })
+    // Vue.component는 객체 생성 전에 할당을 해주어야 된다.
+    const vm = new Vue({
+      el: "#app",
+      // 지역 component
+      components: {
+        'app-footer': {
+          template: '<footer>footer</footer>'
+        }
+      }
+    });
+    console.log("🚀 ~ vm", vm)
+    
+    Vue.component('app-latedefine', {
+      template: '<h1>latedefine</h1>'
+    })
+    new Vue({
+      el:'#app2',
+      components:{
+        'app-header':{
+          template:'<h1>local Header</h1>'
+        },
+        'div':{
+          template:'<div>local component div</div>'
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <app-header v-on:pass="logText"></app-header>
+    <app-component v-on:add-num="countNumber"></app-component>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const appHeader = {
+      // props는 실제 tag에서 작성했는데,  method는 template에 적용했다?
+      template:'<button v-on:click="passEvent">click me</button>',
+      methods:{
+        passEvent: function(){
+          this.$emit('pass'); 
+        }
+      }
+    }
+    const appComponent = {
+      // props는 실제 tag에서 작성했는데,  method는 template에 적용했다?
+      template:'<button v-on:click="addNumber">add</button>',
+      methods:{
+        addNumber: function(){
+          this.$emit('add-num'); 
+        }
+      }
+    }
+    const vm = new Vue({
+      el: "#app",
+      components:{
+        'app-header':appHeader,
+        'app-component':appComponent
+      },
+      methods:{
+        logText:function() {
+          console.log('hi');
+        },
+        countNumber:function() {
+          // console.log(this);
+          this.num++;
+        }
+      },
+      data:{
+        num:10
+      }
+    });
+    console.log("🚀 ~ vm", vm)
+
+  </script>
+</body>
+
+</html>
