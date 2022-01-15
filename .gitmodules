@@ -1,0 +1,3 @@
+[submodule "source-code/vue-intermediate"]
+	path = source-code/vue-intermediate
+	url = https://github.com/joshua1988/vue-intermediate.git
