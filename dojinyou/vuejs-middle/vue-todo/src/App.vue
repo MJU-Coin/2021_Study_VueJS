@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <TodoList
+      v-bind:propsdata="todoItems"
+      v-on:removeItem="removeOneItem"
+      v-on:toggleItem="toggleOneItem"
+    ></TodoList>
+    <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
   </div>
 </template>
 
@@ -29,6 +33,46 @@ export default {
     TodoInput: TodoInput,
     TodoList: TodoList,
     TodoFooter: TodoFooter
+  },
+  created: function() {
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) != "loglevel:webpack-dev-server") {
+          this.todoItems.push(
+            JSON.parse(localStorage.getItem(localStorage.key(i)))
+          );
+        }
+      }
+    }
+  },
+  data: function() {
+    return { todoItems: [] };
+  },
+  methods: {
+    addOneItem: function(newTodoItem) {
+      // console.log(newTodoItem);
+      const obj = { completed: false, item: newTodoItem };
+      // 데이터베이스 저장하는 로직
+      localStorage.setItem(newTodoItem, JSON.stringify(obj));
+      // 데이터 동기화
+      this.todoItems.push(obj);
+    },
+    removeOneItem: function(todoItem, index) {
+      // console.log(index);
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+    },
+    toggleOneItem: function(todoItem, index) {
+      // console.log("toggleOneItem");
+      // 데이터베이스 반영
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
+    clearAllItems: function() {
+      this.todoItems = [];
+      localStorage.clear();
+    }
   }
 };
 </script>

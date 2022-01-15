@@ -19,11 +19,7 @@ export default {
   methods: {
     addTodo: function() {
       if (this.newTodoItem !== "") {
-        console.log(this.newTodoItem);
-        const obj = { completed: false, item: this.newTodoItem };
-        // 저장하는 로직
-        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
-
+        this.$emit("addTodoItem", this.newTodoItem);
         // 입력값 초기화
         // this.newTodoItem = "";
         // refactoring => 함수의 역할 분리
