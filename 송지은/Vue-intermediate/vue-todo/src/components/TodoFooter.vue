@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-.ClearAllContainer {
+.clearAllContainer {
     width: 8.5rem;
     height: 50px;
     line-height: 50px;
