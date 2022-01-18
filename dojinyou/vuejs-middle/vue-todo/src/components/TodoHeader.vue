@@ -1,13 +1,16 @@
 <template>
   <header>
-    <h1>TODO it!</h1>
+    <h1>{{ this.headerText }}</h1>
   </header>
 </template>
-
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["headerText"])
+  }
+};
 </script>
-
 <style scoped>
 /* scoped 옵션을 추가하게 되면 해당 component에만 적용이 가능하다. */
 h1 {
