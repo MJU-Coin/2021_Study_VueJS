@@ -1,28 +1,27 @@
 <template>
-  <div class = "inputBox shadow">
-      <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
-      <span class="addContainer" v-on:click="addTodo">
-        <i class="fas fa-plus addBtn" ></i>
-      </span>
+  <div class="inputBox shadow">
+    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
+    <span class="addContainer" v-on:click="addTodo">
+      <i class="addBtn fas fa-plus" aria-hidden="true"></i>
+    </span>
   </div>
 </template>
 
 <script>
 export default {
-  data: function(){
+  data: function() {
     return {
-      newTodoItem: ""
+      newTodoItem: ''
     }
   },
-  methods:{
-    addTodo: function(){
-      if (this.newTodoItem !== ''){
-      var obj = {completed:false, item:this.newTodoItem};
-      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
-      this.clearInput();
+  methods: {
+    addTodo: function() {
+      if (this.newTodoItem !== '') {
+        this.$emit('addTodoItem', this.newTodoItem)
+        this.clearInput();
       }
     },
-    clearInput: function(){
+    clearInput: function() {
       this.newTodoItem = '';
     }
   }
@@ -31,7 +30,7 @@ export default {
 
 <style scoped>
 input:focus {
-  outline:none;
+  outline: none;
 }
 .inputBox {
   background: white;
@@ -39,11 +38,11 @@ input:focus {
   line-height: 50px;
   border-radius: 5px;
 }
-.inputBox input{
+.inputBox input {
   border-style: none;
   font-size: 0.9rem;
 }
-.addContainer{
+.addContainer {
   float: right;
   background: linear-gradient(to right, #6478FB, #8763FB);
   display: block;
@@ -51,7 +50,7 @@ input:focus {
   border-radius: 0 5px 5px 0;
 }
 .addBtn {
-  color:white;
+  color: white;
   vertical-align: middle;
 }
 </style>
