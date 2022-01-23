@@ -7,7 +7,7 @@
 <script>
 export default {
   methods: {
-    clearTodo: function() {
+    clearTodo() {
       this.$emit('clearAll');
     }
   }
@@ -25,7 +25,6 @@ export default {
 }
 .clearAllBtn {
   color: #e20303;
-  /* 추가 */
   display: block;
 }
 </style>
