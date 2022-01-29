@@ -15,7 +15,7 @@
         <div>
             <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit()">
         </div>
-        <p id="loginP" v-on:click="loginSubmit()">로그인하기</p>
+        <p id="loginP" v-on:click="LoginSubmit()">로그인하기</p>
         <modal v-if="showModal" v-on:close="showModal = false">
             <h2 slot="header">{{ modalText }}</h2>
         </modal>
@@ -39,7 +39,6 @@ export default {
             modalText: "값 할당 안됨",
             showModal: false
         };
-        
     },
     methods: {
         loginSubmit() {
@@ -48,13 +47,13 @@ export default {
                 console.log(this.loginId,this.loginPassword);
                 localStorage.setItem(this.loginId, this.loginPassword);
                 this.clearInput();
+                this.$router.push("/mainpage");
             }
             else{
                 console.log(this.modalText);
                 this.showModal = true;
                 this.clearInput();
             }
-            
         },
         clearInput() {
             // input폼 비우기
@@ -66,20 +65,19 @@ export default {
             if (localStorage.length > 0){
                 console.log(this.loginId);
                 console.log(localStorage.key(this.loginId));
-                if((localStorage.key(this.loginId) == this.loginPassword)&&(this.loginId!="")&&(this.loginPassword!="")){
+                if((localStorage.key(this.loginId) == this.loginPassword) && (this.loginId!="") && (this.loginPassword!="")){
                     this.loginAccept = true;
                 }
-                else if((localStorage.key(this.loginId) == this.loginPassword)&&((this.loginId="")||(this.loginPassword=""))){
+                else if((localStorage.key(this.loginId) == this.loginPassword) && ((this.loginId="")||(this.loginPassword=""))){
                     this.modalText = "아이디나 패스워드를 입력해주세요."
                     this.loginAccept = false;
                 }
-                else if((localStorage.key(this.loginId) != this.loginPassword)&&((this.loginId!="")&&(this.loginPassword!=""))){
+                else if((localStorage.key(this.loginId) != this.loginPassword) && ((this.loginId!="")&&(this.loginPassword!=""))){
                     this.modalText = "아이디나 패스워드가 잘못되었습니다."
                     this.loginAccept = false;
                 }   
             }
         },
-        
     }
 }
 </script>
