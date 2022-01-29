@@ -34,24 +34,16 @@ export default {
         return {
             loginId: "",
             loginPassword: "",
-            loginAccept: false,
             modalText: "값 할당 안됨",
             showModal: false,
-            isIDExist: false,
-            isPasswordExist: false,
-
         };
     },
     methods: {
         loginSubmit() {
             // 로컬스토리지에 저장
-            if (this.loginAccept){
+            if (this.loginJudgement){
                 this.clearInput();//input 비우기
                 this.$router.push("/mainpage");//메인페이지로 이동
-            }
-            else{
-                this.showModal = true;
-                this.clearInput();
             }
         },
         clearInput() {
@@ -64,32 +56,37 @@ export default {
             if (localStorage.length > 0){
                 if (this.IDExist&&this.PasswordExist){
                     if (localStorage.getItem(this.loginId) === this.loginPassword){
-                        this.loginAccept = true;
-                    }
+                        this.loginSubmit();
+                        }
                     else{
-                        this.modalText = "아이디나 비밀번호를 다시 확인해주세요"
+                        this.modalText = "아이디나 비밀번호를 다시 확인해주세요";
+                        this.showModal = true;
+                        this.clearInput();
+                        return false;
+                        }
                     }
                 }
                 else{
                     this.modalText = "값 할당 안됨"
+                    this.showModal = true;
+                    this.clearInput();
+                    return false;
                 }
-            }
-            this.loginSubmit();
-        },
+            },
         IDExist() {
             if (this.loginId == !""){
-                this.isIDExist = true;
+                return true;
             }
             else {
-                this.isIDExist = false;
+                return false;
             }
         },
         PasswordExist() {
             if (this.PasswordExist == !""){
-                this.isPasswordExist = true;
+                return true;
             }
             else {
-                this.isPasswordExist = false;
+                return false;
             }
         },
 
