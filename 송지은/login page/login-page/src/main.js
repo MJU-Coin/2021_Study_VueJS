@@ -17,10 +17,6 @@ const routes = [
     path: "/main",
     component: mainpage,
   },
-  {
-    path: "/login",
-    component: loginpage,
-  },
 ];
 
 const router = new VueRouter({

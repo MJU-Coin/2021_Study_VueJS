@@ -13,9 +13,9 @@
             <input type="search" placeholder="아이디" v-model="loginId">
         </div>
         <div>
-            <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit()">
+            <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keyup.up.enter="loginJudgement()">
         </div>
-        <p id="loginP" v-on:click="LoginSubmit()">로그인하기</p>
+        <p id="loginP" @click="LoginJudgement()">로그인하기</p>
         <modal v-if="showModal" v-on:close="showModal = false">
             <h2 slot="header">{{ modalText }}</h2>
         </modal>
@@ -30,27 +30,26 @@ export default {
     components: {
         Modal,
     },
-    name: 'LoginForm',
     data() {
         return {
             loginId: "",
             loginPassword: "",
             loginAccept: false,
             modalText: "값 할당 안됨",
-            showModal: false
+            showModal: false,
+            isIDExist: false,
+            isPasswordExist: false,
+
         };
     },
     methods: {
         loginSubmit() {
             // 로컬스토리지에 저장
             if (this.loginAccept){
-                console.log(this.loginId,this.loginPassword);
-                localStorage.setItem(this.loginId, this.loginPassword);
-                this.clearInput();
-                this.$router.push("/mainpage");
+                this.clearInput();//input 비우기
+                this.$router.push("/mainpage");//메인페이지로 이동
             }
             else{
-                console.log(this.modalText);
                 this.showModal = true;
                 this.clearInput();
             }
@@ -63,21 +62,37 @@ export default {
         loginJudgement() {
             //로컬스토리지에 값이 있는지 확인
             if (localStorage.length > 0){
-                console.log(this.loginId);
-                console.log(localStorage.key(this.loginId));
-                if((localStorage.key(this.loginId) == this.loginPassword) && (this.loginId!="") && (this.loginPassword!="")){
-                    this.loginAccept = true;
+                if (this.IDExist&&this.PasswordExist){
+                    if (localStorage.getItem(this.loginId) === this.loginPassword){
+                        this.loginAccept = true;
+                    }
+                    else{
+                        this.modalText = "아이디나 비밀번호를 다시 확인해주세요"
+                    }
                 }
-                else if((localStorage.key(this.loginId) == this.loginPassword) && ((this.loginId="")||(this.loginPassword=""))){
-                    this.modalText = "아이디나 패스워드를 입력해주세요."
-                    this.loginAccept = false;
+                else{
+                    this.modalText = "값 할당 안됨"
                 }
-                else if((localStorage.key(this.loginId) != this.loginPassword) && ((this.loginId!="")&&(this.loginPassword!=""))){
-                    this.modalText = "아이디나 패스워드가 잘못되었습니다."
-                    this.loginAccept = false;
-                }   
+            }
+            this.loginSubmit();
+        },
+        IDExist() {
+            if (this.loginId == !""){
+                this.isIDExist = true;
+            }
+            else {
+                this.isIDExist = false;
             }
         },
+        PasswordExist() {
+            if (this.PasswordExist == !""){
+                this.isPasswordExist = true;
+            }
+            else {
+                this.isPasswordExist = false;
+            }
+        },
+
     }
 }
 </script>
