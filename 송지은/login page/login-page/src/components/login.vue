@@ -15,7 +15,7 @@
         <div>
             <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keyup.up.enter="loginJudgement()">
         </div>
-        <p id="loginP" @click="LoginJudgement()">로그인하기</p>
+        <p id="loginP" @click="LoginJudgement">로그인하기</p>
         <modal v-if="showModal" v-on:close="showModal = false">
             <h2 slot="header">{{ modalText }}</h2>
         </modal>
@@ -52,6 +52,7 @@ export default {
             this.loginPassword ='';
         },
         loginJudgement() {
+            localStorage.setItem("user", "1234");
             //로컬스토리지에 값이 있는지 확인
             if (localStorage.length > 0){
                 if (this.IDExist&&this.PasswordExist){
