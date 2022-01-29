@@ -1,2 +1,2 @@
 export { default as loginpage } from "./loginpage";
-export { default as mainpage } from "./mainpage";
+export { default as homepage } from "./homepage";

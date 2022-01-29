@@ -6,16 +6,14 @@
 회원 가입 구현 없이 user / 1234로 입력된 경우만 로그인 시키고 그 외에 경우에는 로그인 실패로 처리한다.
 로그인 요청 성공 시 메인 페이지(/home)로 이동한다.-->
 
-
 <template>
     <div>
         <div>
             <input type="search" placeholder="아이디" v-model="loginId">
         </div>
         <div>
-            <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keyup.up.enter="loginJudgement()">
+            <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keypress.enter="loginJudgement">
         </div>
-        <p id="loginP" @click="LoginJudgement">로그인하기</p>
         <modal v-if="showModal" v-on:close="showModal = false">
             <h2 slot="header">{{ modalText }}</h2>
         </modal>
@@ -34,7 +32,7 @@ export default {
         return {
             loginId: "",
             loginPassword: "",
-            modalText: "값 할당 안됨",
+            modalText: "아이디나 비밀번호를 다시 확인해주세요",
             showModal: false,
         };
     },
@@ -43,7 +41,7 @@ export default {
             // 로컬스토리지에 저장
             if (this.loginJudgement){
                 this.clearInput();//input 비우기
-                this.$router.push("/mainpage");//메인페이지로 이동
+                this.$router.push("/home");//메인페이지로 이동
             }
         },
         clearInput() {
@@ -53,29 +51,19 @@ export default {
         },
         loginJudgement() {
             localStorage.setItem("user", "1234");
-            //로컬스토리지에 값이 있는지 확인
-            if (localStorage.length > 0){
-                if (this.IDExist&&this.PasswordExist){
+                if (this.IDExist && this.PasswordExist){
+                    console.log("안에 값이 있음");
                     if (localStorage.getItem(this.loginId) === this.loginPassword){
+                        console.log("성공!");
+                        this.clearInput();
                         this.loginSubmit();
                         }
-                    else{
-                        this.modalText = "아이디나 비밀번호를 다시 확인해주세요";
-                        this.showModal = true;
-                        this.clearInput();
-                        return false;
-                        }
-                    }
                 }
-                else{
-                    this.modalText = "값 할당 안됨"
-                    this.showModal = true;
-                    this.clearInput();
-                    return false;
-                }
+                this.showModal = true;
+                this.clearInput();
             },
-        IDExist() {
-            if (this.loginId == !""){
+        DIExist() {
+            if (this.loginId !== ""){
                 return true;
             }
             else {
@@ -83,18 +71,16 @@ export default {
             }
         },
         PasswordExist() {
-            if (this.PasswordExist == !""){
+            if (this.loginPassword !== ""){
                 return true;
             }
             else {
                 return false;
             }
         },
-
     }
 }
 </script>
 
 <style>
-
 </style>
