@@ -12,7 +12,8 @@
             <input type="search" placeholder="아이디" v-model="loginId">
         </div>
         <div>
-            <input type="password" placeholder="비밀번호" v-model="loginPassword" v-on:keypress.enter="loginJudgement">
+            <input type="password" placeholder="비밀번호" v-model="loginPassword"
+                v-on:keypress.enter="loginJudgement">
         </div>
         <modal v-if="showModal" v-on:close="showModal = false">
             <h2 slot="header">{{ modalText }}</h2>
@@ -51,27 +52,17 @@ export default {
         },
         loginJudgement() {
             localStorage.setItem("user", "1234");
-                if (this.IDExist && this.PasswordExist){
-                    console.log("안에 값이 있음");
-                    if (localStorage.getItem(this.loginId) === this.loginPassword){
-                        console.log("성공!");
-                        this.clearInput();
-                        this.loginSubmit();
-                        }
+            if (this.isExist(loginID) && this.isExist(this.loginPassword)){
+                if (localStorage.getItem(this.loginId) === this.loginPassword){
+                    this.clearInput();
+                    this.loginSubmit();
+                    }                
                 }
-                this.showModal = true;
-                this.clearInput();
-            },
-        DIExist() {
-            if (this.loginId !== ""){
-                return true;
-            }
-            else {
-                return false;
-            }
+            this.showModal = true;
+            this.clearInput();
         },
-        PasswordExist() {
-            if (this.loginPassword !== ""){
+        isExist(string) {
+            if (string !== ""){
                 return true;
             }
             else {
