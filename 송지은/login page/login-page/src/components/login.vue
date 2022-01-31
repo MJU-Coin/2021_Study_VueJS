@@ -52,7 +52,7 @@ export default {
         },
         loginJudgement() {
             localStorage.setItem("user", "1234");
-            if (this.isExist(loginID) && this.isExist(this.loginPassword)){
+            if (this.isExist(this.loginID) && this.isExist(this.loginPassword)){
                 if (localStorage.getItem(this.loginId) === this.loginPassword){
                     this.clearInput();
                     this.loginSubmit();
@@ -74,4 +74,5 @@ export default {
 </script>
 
 <style>
+
 </style>
